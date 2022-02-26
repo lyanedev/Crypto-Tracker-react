@@ -6,14 +6,22 @@ import { NavLink } from "react-router-dom";
 import { TrendingCoins } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
 
+// add commas to crypto prices
+export const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const Caroussel = () => {
   const [trending, setTrending] = useState([]);
-
   const { currency, symbol } = CryptoState();
 
   const getTrendingCoins = async () => {
-    const { data } = await axios.get(TrendingCoins(currency));
-    setTrending(data);
+    try {
+      const { data } = await axios.get(TrendingCoins(currency));
+      setTrending(data);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   console.log(trending);
@@ -51,13 +59,30 @@ const Caroussel = () => {
               marginBottom: 10,
             }}
           />
-          <span>{coin?.name}</span>
-          <span>
+          <span
+            style={{
+              marginBottom: 6,
+            }}
+          >
+            {coin?.name}
+          </span>
+          <span
+            style={{
+              color: profit > 0 ? "#8bc34a" : "#ff5722",
+              fontWeight: 600,
+            }}
+          >
             {profit && "+"}
             {coin?.price_change_percentage_24h?.toFixed(2)}%
           </span>
-          <span>
-              {symbol}{coin?.current_price.toFixed(1)}
+          <span
+            style={{
+              fontSize: 22,
+              fontWeight: 600,
+            }}
+          >
+            {numberWithCommas(coin?.current_price.toFixed(1))}
+            {symbol}
           </span>
         </Card>
       </NavLink>
