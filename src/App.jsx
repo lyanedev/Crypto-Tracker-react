@@ -1,45 +1,33 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import CssBaseline from "@mui/material/CssBaseline";
+import { Box } from "@mui/system";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+
+import Header from "./components/Header";
+import Homepage from "./Pages/Homepage";
+import CoinPage from "./Pages/CoinPage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <>
+      <CssBaseline />
+      <BrowserRouter>
+        <Box
+          sx={{
+            minHeight: "100vh",
+            backgroundColor: "#fafafa",
+            color: "#212121",
+          }}
+        >
+          <Header />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/coins/:id" element={<CoinPage />} />
+          </Routes>
+        </Box>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;
