@@ -1,7 +1,6 @@
 import { Box, Card } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import AliceCarousel from "react-alice-carousel";
 import { NavLink } from "react-router-dom";
 import { TrendingCoins } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
@@ -106,17 +105,7 @@ const Caroussel = () => {
         alignItems: "center",
       }}
     >
-      <AliceCarousel
-        mouseTracking
-        infinite
-        autoPlayInterval={50}
-        animationDuration={1500}
-        disableDotsControls
-        responsive={resposiveCarroussel}
-        autoPlay
-        disableButtonsControls
-        items={items}
-      />
+      {items}
     </Box>
   );
 };
