@@ -15,10 +15,11 @@ import { CryptoState } from "../../CryptoContext";
 
 // TODO: ---------- MOVE TO STYLED FILE--------------------
 const StyledHeaderTitle = styled(Typography)({
+  fontFamily:"Poppins",
   fontWeight: "800",
   fontSize: 50,
-  marginTop: 10,
-  marginBottom: 10,
+  marginTop: 20,
+  marginBottom: 20,
   flex: 1,
   cursor: "pointer",
   span: {
