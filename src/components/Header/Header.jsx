@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 
 import "./Header.styled";
+import { CryptoState } from "../../CryptoContext";
 
 // TODO: ---------- MOVE TO STYLED FILE--------------------
 const StyledHeaderTitle = styled(Typography)({
@@ -28,6 +29,10 @@ const StyledHeaderTitle = styled(Typography)({
 const Header = () => {
   const navigate = useNavigate();
 
+  const { currency, setCurrency } = CryptoState();
+
+  console.log(currency);
+
   return (
     <>
       <AppBar position="static" color="transparent">
@@ -40,6 +45,10 @@ const Header = () => {
             <Select
               labelId="currency"
               variant="outlined"
+              value={currency}
+              onChange={(e) => {
+                setCurrency(e.target.value);
+              }}
               sx={{
                 width: 100,
                 height: 50,
