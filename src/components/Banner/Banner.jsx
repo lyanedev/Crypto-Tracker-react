@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import "./Banner.styled";
+import Carousel from "./Carousel";
 
 const Banner = () => {
   return (
@@ -31,7 +32,7 @@ const Banner = () => {
               color: "rgb(249,249,249)",
               fontSize: 50,
               textAlign: "center",
-              marginBottom: 2
+              marginBottom: 2,
             }}
           >
             Crypto Tracker
@@ -50,6 +51,7 @@ const Banner = () => {
             L'endroit pour être toujours au courant du marché des crypto.
           </Typography>
         </Box>
+        <Carousel />
       </Container>
     </Box>
   );
