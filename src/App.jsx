@@ -7,6 +7,8 @@ import Header from "./components/Header/Header";
 import HomePage from "./Pages/HomePage/HomePage";
 import CoinPage from "./Pages/CoinPage/CoinPage";
 
+import SocialSpeedDial from "./components/SocialSpeedDial/SocialSpeedDial";
+
 const lightTheme = createTheme({
   palette: {},
 });
@@ -30,6 +32,7 @@ function App() {
               <Route path="/coins/:id" element={<CoinPage />} />
             </Routes>
           </BrowserRouter>
+          <SocialSpeedDial />
         </div>
       </ThemeProvider>
     </>
