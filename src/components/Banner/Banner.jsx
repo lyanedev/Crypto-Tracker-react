@@ -51,7 +51,9 @@ const Banner = () => {
             L'endroit pour être toujours au courant du marché des crypto.
           </Typography>
         </Box>
+
         <Carousel />
+        
       </Container>
     </Box>
   );

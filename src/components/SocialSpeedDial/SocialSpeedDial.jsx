@@ -17,7 +17,7 @@ const SocialSpeedDial = () => {
     <>
       <SpeedDial
         ariaLabel="SpeedDial openIcon example"
-        sx={{ position: "absolute", bottom: 30, right: 30 }}
+        sx={{ position: "fixed", bottom: 30, right: 30 }}
         icon={<FaceIcon />}
       >
         {actions.map((action) => (

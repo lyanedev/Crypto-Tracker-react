@@ -22,7 +22,7 @@ function App() {
           sx={{
             backroundColor: "rgb(249,249,249)",
             color: "rgb(4,4,4)",
-            minHeight: "100vh",
+            minHeight: "100vh"
           }}
         >
           <BrowserRouter>
