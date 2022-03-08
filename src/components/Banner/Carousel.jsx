@@ -3,11 +3,9 @@ import { NavLink } from "react-router-dom";
 
 import axios from "axios";
 
-const Flickity = "react-flickity-component";
-
 import { CryptoState } from "../../CryptoContext";
 import { TrendingCoins } from "../../config/api";
-import { Card, Grid, Box, Typography } from "@mui/material";
+import { Card, Grid, Box, Typography, Chip } from "@mui/material";
 
 const Carousel = () => {
   const [trendingData, setTrendingData] = useState([]);
@@ -30,7 +28,6 @@ const Carousel = () => {
         <Card
           sx={{
             width: 200,
-            height: 220,
             backgroundColor: "rgba(255, 255, 255, 0.75)",
             backdropFilter: "blur(16px) saturate(180%)",
             webkitBackdropFilter: "blur(16px) saturate(180%)",
@@ -39,12 +36,7 @@ const Carousel = () => {
             padding: 2,
           }}
         >
-          <Grid
-            container
-            direction="column"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Grid container direction="column" justifyContent="space-between">
             <Grid
               item
               container
@@ -52,14 +44,40 @@ const Carousel = () => {
               justifyContent="space-between"
               alignItems="flex-start"
             >
-              <Grid xs={6} item>
+              <Grid xs={5} item>
                 <img src={coin?.image} alt={coin?.name} width="80%" />
               </Grid>
-              <Grid xs={6} item>
-                <Typography variant="p" sx={{ fontWeight: 600 }}>
-                  {coin.name}
-                </Typography>
+
+              <Grid xs={7} item container direction="column">
+                <Grid item xs={12}>
+                  <Typography
+                    variant="p"
+                    sx={{ fontWeight: 600, opacity: 0.7 }}
+                  >
+                    {coin.name}
+                  </Typography>
+
+                  <Grid item xs={12}>
+                    <Chip label={coin.symbol} sx={{ fontWeight: 600 }} />
+                  </Grid>
+                </Grid>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="p"
+                sx={{
+                  color:
+                    coin.price_change_percentage_24h > 0
+                      ? "#60A561"
+                      : "#BF4342",
+                  fontWeight: 600,
+                  fontSize: 20,
+                }}
+              >
+                {coin.price_change_percentage_24h > 0 ? "+" : ""}
+                {coin.price_change_percentage_24h.toFixed(2)} %
+              </Typography>
             </Grid>
           </Grid>
         </Card>
@@ -73,7 +91,12 @@ const Carousel = () => {
 
   return (
     <Box
-      style={{ display: "flex", justifyContent: "space-around", width: "100%" }}
+      style={{
+        display: "flex",
+        justifyContent: "space-evenly",
+        width: "100%",
+        padding: 20,
+      }}
     >
       {items[0]}
       {items[1]}

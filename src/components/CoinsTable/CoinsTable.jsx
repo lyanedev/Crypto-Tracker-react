@@ -132,6 +132,9 @@ const CoinsTable = () => {
                         <TableRow
                           key={row.name}
                           onClick={() => navigate(`/coins/${row.id}`)}
+                          sx={{
+                            cursor: "pointer",
+                          }}
                         >
                           <TableCell
                             align="left"
@@ -182,7 +185,7 @@ const CoinsTable = () => {
                           <TableCell
                             align="left"
                             sx={{
-                              color: profit > 0 ? "green" : "red",
+                              color: profit > 0 ? "#60A561" : "#BF4342",
                               fontWeight: 600,
                               fontSize: 20,
                             }}
@@ -198,8 +201,10 @@ const CoinsTable = () => {
                               fontSize: 20,
                             }}
                           >
-                            🏛 {row.market_cap.toString().slice(0, -6)} Millions
-                            {" "}{currency === "EUR" ? "€" : "$"}
+                            🏛 {row.market_cap.toString().slice(0, -6)}{" "}
+                            <span style={{ opacity: 0.5 }}>
+                              Millions {currency === "EUR" ? "€" : "$"}
+                            </span>
                           </TableCell>
                         </TableRow>
                       );
