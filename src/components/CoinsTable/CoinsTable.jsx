@@ -17,6 +17,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Pagination,
 } from "@mui/material";
 import PageviewTwoToneIcon from "@mui/icons-material/PageviewTwoTone";
 
@@ -24,6 +25,7 @@ const CoinsTable = () => {
   const [coins, setcoins] = useState([]);
   const [loading, setloading] = useState(false);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -55,7 +57,8 @@ const CoinsTable = () => {
         <Box
           sx={{
             textAlign: "left",
-            padding: 3,
+            padding: 2,
+            marginTop: 5,
             display: "flex",
             flexWrap: "wrap",
           }}
@@ -85,7 +88,6 @@ const CoinsTable = () => {
             }}
             onChange={(e) => setSearch(e.target.value)}
           />
-
           <TableContainer>
             {loading ? (
               <LinearProgress />
@@ -93,22 +95,22 @@ const CoinsTable = () => {
               <Table>
                 <TableHead
                   sx={{
-                    backgroundColor: "#4158D0",
                     backgroundImage:
                       "linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)",
                   }}
                 >
                   <TableRow>
                     {[
-                      "🪙 Monnaie",
-                      "💰 Prix",
-                      "📊 Changement en 24h",
-                      "🏛 Capitalisation boursière",
+                      "Monnaie",
+                      "Prix",
+                      "Changement en 24h",
+                      "Capitalisation boursière",
                     ].map((head) => (
                       <TableCell
                         key={head}
                         sx={{
                           fontWeight: 600,
+                          fontSize: 16,
                           fontFamily: "Poppins",
                           color: "rgb(249, 249, 249)",
                         }}
@@ -119,62 +121,78 @@ const CoinsTable = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {handleSearch().map((row) => {
-                    const profit = row.price_change_percentage_24h > 0;
+                  {handleSearch()
+                    .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                    .map((row) => {
+                      const profit = row.price_change_percentage_24h > 0;
 
-                    return (
-                      <TableRow
-                        key={row.name}
-                        onClick={() => navigate(`/coins/${row.id}`)}
-                      >
-                        <TableCell
-                          align="left"
-                          component="th"
-                          scope="row"
-                          sx={{
-                            display: "flex",
-                            gap: 15,
-                          }}
+                      return (
+                        <TableRow
+                          key={row.name}
+                          onClick={() => navigate(`/coins/${row.id}`)}
                         >
-                          <Box
+                          <TableCell
+                            align="left"
+                            component="th"
+                            scope="row"
                             sx={{
                               display: "flex",
-                              flexDirection: "column",
-                              justifyContent: "space-between",
+                              gap: 15,
                             }}
                           >
-                            <img src={row.image} alt={row.name} width={50} />
-                            <Typography
-                              variant="p"
+                            <Box
                               sx={{
-                                fontWeight: 600,
-                                fontSize: 20,
-                                marginTop: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
                               }}
                             >
-                              {row.name}
-                            </Typography>
-                            <Typography
-                              variant="p"
-                              sx={{ fontWeight: 600, opacity: 0.5 }}
-                            >
-                              {row.symbol}
-                            </Typography>
-                          </Box>
-                        </TableCell>
+                              <img src={row.image} alt={row.name} width={50} />
+                              <Typography
+                                variant="p"
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: 20,
+                                  marginTop: 1,
+                                }}
+                              >
+                                {row.name}
+                              </Typography>
+                              <Typography
+                                variant="p"
+                                sx={{ fontWeight: 600, opacity: 0.5 }}
+                              >
+                                {row.symbol}
+                              </Typography>
+                            </Box>
+                          </TableCell>
 
-                        <TableCell>
-                          <Typography variant="p" sx={{ fontWeight: 600 }}>
-                            {row.current_price} {currency === "EUR" ? "€" : "$"}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell>
+                            <Typography variant="p" sx={{ fontWeight: 600 }}>
+                              💰 {row.current_price}{" "}
+                              {currency === "EUR" ? "€" : "$"}
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
             )}
           </TableContainer>
+          <Pagination
+            count={+(handleSearch()?.length / 10).toFixed(0)}
+            onChange={(e, value) => {
+              setPage(value);
+              window.scroll(0, 100);
+            }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              padding: 2,
+              width: "100%",
+            }}
+          />
         </Box>
       </Container>
     </>
