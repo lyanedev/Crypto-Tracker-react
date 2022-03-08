@@ -91,19 +91,26 @@ const CoinsTable = () => {
               <LinearProgress />
             ) : (
               <Table>
-                <TableHead>
+                <TableHead
+                  sx={{
+                    backgroundColor: "#4158D0",
+                    backgroundImage:
+                      "linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)",
+                  }}
+                >
                   <TableRow>
                     {[
-                      "Monnaie",
-                      "Prix",
-                      "Changement en 24h",
-                      "Capitalisation boursière",
+                      "🪙 Monnaie",
+                      "💰 Prix",
+                      "📊 Changement en 24h",
+                      "🏛 Capitalisation boursière",
                     ].map((head) => (
                       <TableCell
                         key={head}
                         sx={{
                           fontWeight: 600,
                           fontFamily: "Poppins",
+                          color: "rgb(249, 249, 249)",
                         }}
                       >
                         {head}
@@ -114,20 +121,52 @@ const CoinsTable = () => {
                 <TableBody>
                   {handleSearch().map((row) => {
                     const profit = row.price_change_percentage_24h > 0;
+
                     return (
                       <TableRow
                         key={row.name}
                         onClick={() => navigate(`/coins/${row.id}`)}
                       >
                         <TableCell
+                          align="left"
                           component="th"
                           scope="row"
                           sx={{
                             display: "flex",
-                            gap: 15
+                            gap: 15,
                           }}
                         >
-                          <img src={row.image} alt={row.name} width={50} />
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <img src={row.image} alt={row.name} width={50} />
+                            <Typography
+                              variant="p"
+                              sx={{
+                                fontWeight: 600,
+                                fontSize: 20,
+                                marginTop: 1,
+                              }}
+                            >
+                              {row.name}
+                            </Typography>
+                            <Typography
+                              variant="p"
+                              sx={{ fontWeight: 600, opacity: 0.5 }}
+                            >
+                              {row.symbol}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+
+                        <TableCell>
+                          <Typography variant="p" sx={{ fontWeight: 600 }}>
+                            {row.current_price} {currency === "EUR" ? "€" : "$"}
+                          </Typography>
                         </TableCell>
                       </TableRow>
                     );
