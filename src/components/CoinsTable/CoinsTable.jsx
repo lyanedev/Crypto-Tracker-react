@@ -88,7 +88,9 @@ const CoinsTable = () => {
             }}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <TableContainer>
+          <TableContainer sx={{
+            marginTop: 3
+          }}>
             {loading ? (
               <LinearProgress />
             ) : (
@@ -167,11 +169,37 @@ const CoinsTable = () => {
                             </Box>
                           </TableCell>
 
-                          <TableCell>
-                            <Typography variant="p" sx={{ fontWeight: 600 }}>
+                          <TableCell align="left">
+                            <Typography
+                              variant="p"
+                              sx={{ fontWeight: 600, fontSize: 20 }}
+                            >
                               💰 {row.current_price}{" "}
                               {currency === "EUR" ? "€" : "$"}
                             </Typography>
+                          </TableCell>
+
+                          <TableCell
+                            align="left"
+                            sx={{
+                              color: profit > 0 ? "green" : "red",
+                              fontWeight: 600,
+                              fontSize: 20,
+                            }}
+                          >
+                            {profit > 0 ? "😊 +" : "😭 "}
+                            {row.price_change_percentage_24h.toFixed(2)} %
+                          </TableCell>
+
+                          <TableCell
+                            align="left"
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: 20,
+                            }}
+                          >
+                            🏛 {row.market_cap.toString().slice(0, -6)} Millions
+                            {" "}{currency === "EUR" ? "€" : "$"}
                           </TableCell>
                         </TableRow>
                       );
