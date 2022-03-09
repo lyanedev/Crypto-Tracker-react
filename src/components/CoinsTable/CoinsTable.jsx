@@ -26,6 +26,7 @@ const CoinsTable = () => {
   const [loading, setloading] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [isResults, setIsResults] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,6 +52,11 @@ const CoinsTable = () => {
     );
   };
 
+  console.log(handleSearch());
+  console.log(isResults);
+
+  console.log(search);
+
   return (
     <>
       <Container maxWidth="lg">
@@ -75,6 +81,7 @@ const CoinsTable = () => {
             Valeurs actuelles des Crypto
           </Typography>
           <TextField
+            error={isResults}
             variant="outlined"
             label="Rechercher"
             placeholder="Bitcoin, Ethereum, ..."
@@ -86,11 +93,16 @@ const CoinsTable = () => {
                 </InputAdornment>
               ),
             }}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value.toLowerCase());
+              handleSearch().length === 0 ? setIsResults(true) : setIsResults(false);
+            }}
           />
-          <TableContainer sx={{
-            marginTop: 3
-          }}>
+          <TableContainer
+            sx={{
+              marginTop: 3,
+            }}
+          >
             {loading ? (
               <LinearProgress />
             ) : (
