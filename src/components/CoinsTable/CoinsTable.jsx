@@ -35,7 +35,7 @@ const CoinsTable = () => {
   const getCoinsData = async () => {
     setloading(true);
     const { data } = await axios.get(CoinList(currency));
-    console.log(data);
+    console.log(data); //TODO <------------------------------------- REMOVE AFTER TEST
     setcoins(data);
     setloading(false);
   };
@@ -81,7 +81,9 @@ const CoinsTable = () => {
             Valeurs actuelles des Crypto
           </Typography>
           <TextField
+            type={"search"} // TODO: REVIEW <--------------------- here
             error={isResults}
+            helperText={!isResults ? "" : "Pas de résultats 😥"}
             variant="outlined"
             label="Rechercher"
             placeholder="Bitcoin, Ethereum, ..."
@@ -95,7 +97,9 @@ const CoinsTable = () => {
             }}
             onChange={(e) => {
               setSearch(e.target.value.toLowerCase());
-              handleSearch().length === 0 ? setIsResults(true) : setIsResults(false);
+              handleSearch().length === 0
+                ? setIsResults(true)
+                : setIsResults(false);
             }}
           />
           <TableContainer
