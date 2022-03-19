@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import { CryptoState } from "../../CryptoContext";
+import useAxios from "../../hooks/useAxios";
 
 import { CoinList } from "../../config/api";
 import {
@@ -22,8 +24,6 @@ import {
 import PageviewTwoToneIcon from "@mui/icons-material/PageviewTwoTone";
 
 const CoinsTable = () => {
-  const [coins, setcoins] = useState([]);
-  const [loading, setloading] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [isResults, setIsResults] = useState(false);
@@ -32,17 +32,7 @@ const CoinsTable = () => {
 
   const { currency } = CryptoState();
 
-  const getCoinsData = async () => {
-    setloading(true);
-    const { data } = await axios.get(CoinList(currency));
-    console.log(data); //TODO <------------------------------------- REMOVE AFTER TEST
-    setcoins(data);
-    setloading(false);
-  };
-
-  useEffect(() => {
-    getCoinsData();
-  }, [currency]);
+  const { data: coins, isLoading, isError } = useAxios(CoinList(currency));
 
   const handleSearch = () => {
     return coins.filter(
@@ -51,11 +41,6 @@ const CoinsTable = () => {
         coin.symbol.toLowerCase().includes(search)
     );
   };
-
-  console.log(handleSearch());
-  console.log(isResults);
-
-  console.log(search);
 
   return (
     <>
@@ -107,9 +92,9 @@ const CoinsTable = () => {
               marginTop: 3,
             }}
           >
-            {loading ? (
-              <LinearProgress />
-            ) : (
+            {isLoading && <LinearProgress />}
+            {isError && <p>{isError}</p>}
+            {coins && (
               <Table>
                 <TableHead
                   sx={{

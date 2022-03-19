@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import axios from "axios";
-
 import { CryptoState } from "../../CryptoContext";
+
+import useAxios from "../../hooks/useAxios";
+
 import { TrendingCoins } from "../../config/api";
 import {
   Card,
@@ -15,22 +15,11 @@ import {
 } from "@mui/material";
 
 const Carousel = () => {
-  const [trendingData, setTrendingData] = useState([]);
   const { currency } = CryptoState();
-  const [loading, setLoading] = useState(false);
 
-  const getTrendingCoins = async () => {
-    setLoading(true);
-    const { data } = await axios.get(TrendingCoins(currency));
-    setTrendingData(data);
-    setLoading(false);
-  };
+  const { data, isLoading, isError } = useAxios(TrendingCoins(currency));
 
-  useEffect(() => {
-    getTrendingCoins();
-  }, []);
-
-  const items = trendingData.map((coin) => {
+  const items = data.map((coin) => {
     return (
       <NavLink to={`/coins/${coin.id}`} key={coin.name}>
         <Card
@@ -44,72 +33,72 @@ const Carousel = () => {
             padding: 2,
           }}
         >
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <Grid container direction="column" justifyContent="space-between">
-              <Grid
-                item
-                container
-                direction="row"
-                justifyContent="space-between"
-                alignItems="flex-start"
-              >
-                <Grid xs={5} item>
-                  <img src={coin?.image} alt={coin?.name} width="80%" />
-                </Grid>
+          <Grid container direction="column" justifyContent="space-between">
+            <Grid
+              item
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <Grid xs={5} item>
+                <img src={coin?.image} alt={coin?.name} width="80%" />
+              </Grid>
 
-                <Grid xs={7} item container direction="column">
+              <Grid xs={7} item container direction="column">
+                <Grid item xs={12}>
+                  <Typography
+                    variant="p"
+                    sx={{ fontWeight: 600, opacity: 0.7 }}
+                  >
+                    {coin.name}
+                  </Typography>
+
                   <Grid item xs={12}>
-                    <Typography
-                      variant="p"
-                      sx={{ fontWeight: 600, opacity: 0.7 }}
-                    >
-                      {coin.name}
-                    </Typography>
-
-                    <Grid item xs={12}>
-                      <Chip label={coin.symbol} sx={{ fontWeight: 600 }} />
-                    </Grid>
+                    <Chip label={coin.symbol} sx={{ fontWeight: 600 }} />
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  variant="p"
-                  sx={{
-                    color:
-                      coin.price_change_percentage_24h > 0
-                        ? "#60A561"
-                        : "#BF4342",
-                    fontWeight: 600,
-                    fontSize: 20,
-                  }}
-                >
-                  {coin.price_change_percentage_24h > 0 ? "+" : ""}
-                  {coin.price_change_percentage_24h.toFixed(2)} %
-                </Typography>
-              </Grid>
             </Grid>
-          )}
+            <Grid item xs={12}>
+              <Typography
+                variant="p"
+                sx={{
+                  color:
+                    coin.price_change_percentage_24h > 0
+                      ? "#60A561"
+                      : "#BF4342",
+                  fontWeight: 600,
+                  fontSize: 20,
+                }}
+              >
+                {coin.price_change_percentage_24h > 0 ? "+" : ""}
+                {coin.price_change_percentage_24h.toFixed(2)} %
+              </Typography>
+            </Grid>
+          </Grid>
         </Card>
       </NavLink>
     );
   });
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        width: "100%",
-        padding: 20,
-      }}
-    >
-      {items[0]}
-      {items[1]}
-      {items[2]}
-    </Box>
+    <>
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          width: "100%",
+          padding: 20,
+        }}
+      >
+        {isLoading && <CircularProgress />}
+        {isError && <p>{isError}</p>}
+        {data && items[0]}
+        {data && items[1]}
+        {data && items[2]}
+      </Box>
+    </>
   );
 };
 
