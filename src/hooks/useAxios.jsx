@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 import axios from "axios";
 
 const useAxios = (url) => {
@@ -14,17 +16,16 @@ const useAxios = (url) => {
       try {
         const { data } = await axios.get(url);
 
-        if (!data || data.length === "") {
+        if (!data) {
           throw new Error(data.statusText);
         }
 
-        setIsLoading(false);
         setData(data);
         setIsError(null);
       } catch (err) {
-        setIsLoading(false);
         setIsError(`Oops, il y a eu un problème 😭 : ${err}`);
-        console.error(isError);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -33,5 +34,9 @@ const useAxios = (url) => {
 
   return { data, isLoading, isError };
 };
+
+useAxios.propTypes = {
+  url: PropTypes.string.isRequired
+}
 
 export default useAxios;

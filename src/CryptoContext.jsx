@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import PropTypes from "prop-types";
+
 const Crypto = createContext();
 
 const CryptoContext = ({ children }) => {
@@ -16,6 +18,10 @@ const CryptoContext = ({ children }) => {
     </Crypto.Provider>
   );
 };
+
+CryptoContext.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export const CryptoState = () => useContext(Crypto);
 export default CryptoContext;

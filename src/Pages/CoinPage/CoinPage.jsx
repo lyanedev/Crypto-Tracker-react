@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 
 import axios from "axios";
 
-import Typography from "@mui/material/Typography";
-
 import { SingleCoin } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
 
@@ -27,7 +25,7 @@ const CoinPage = () => {
 
   return (
     <>
-      
+      Coin page of {coin.name}
     </>
   );
 };
