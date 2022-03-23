@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent">
+      <AppBar position="sticky" color="default">
         <Container maxWidth="lg">
           <Toolbar>
             <StyledHeaderTitle variant="h3" onClick={() => navigate("/")}>

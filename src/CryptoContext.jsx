@@ -24,4 +24,5 @@ CryptoContext.propTypes = {
 }
 
 export const CryptoState = () => useContext(Crypto);
+
 export default CryptoContext;
