@@ -1,4 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
+
 import "./Banner.styled";
 import Carousel from "./Carousel";
 

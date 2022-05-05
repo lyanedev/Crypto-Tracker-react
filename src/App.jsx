@@ -9,26 +9,25 @@ import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 
 import SocialSpeedDial from "./components/SocialSpeedDial/SocialSpeedDial";
 
-
 function App() {
     return (<>
-            <CssBaseline/>
-            <div
-                sx={{
-                    backroundColor: "rgb(249,249,249)", color: "rgb(4,4,4)", minHeight: "100vh",
-                }}
-            >
-                <BrowserRouter>
-                    <Header/>
-                    <Routes>
-                        <Route path="/" element={<HomePage/>}/>
-                        <Route path="/coins/:id" element={<CoinPage/>}/>
-                        <Route path="*" element={<NotFoundPage/>}/>
-                    </Routes>
-                </BrowserRouter>
-                <SocialSpeedDial/>
-            </div>
-        </>);
+        <CssBaseline/>
+        <div
+            sx={{
+                backgroundColor: "rgb(249,249,249)", color: "rgb(4,4,4)", minHeight: "100vh",
+            }}
+        >
+            <BrowserRouter>
+                <Header/>
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/coins/:id" element={<CoinPage/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                </Routes>
+            </BrowserRouter>
+            <SocialSpeedDial/>
+        </div>
+    </>);
 }
 
 export default App;
