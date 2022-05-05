@@ -7,7 +7,7 @@ import {SingleCoin} from "../../config/api";
 import {CryptoState} from "../../CryptoContext";
 
 import "./CoinPage.styled";
-import {Container, Grid} from "@mui/material";
+import {Box, Container, Grid} from "@mui/material";
 import {CoinInfos, CryptoName, Rank, SingleCoinContainer} from "./CoinPage.styled";
 import CoinInfo from "../../components/CoinInfo";
 
@@ -22,10 +22,9 @@ const CoinPage = () => {
     setCoin(data);
   };
 
-
   useEffect(() => {
     getCoinData();
-  }, []);
+  }, [currency]);
 
   return (<>
     <Container maxWidth="lg">
@@ -65,10 +64,10 @@ const CoinPage = () => {
               </Rank>
             </Grid>
           </Grid>
-          <Grid item>
-            <CoinInfo coin={coin}/>
-          </Grid>
         </Grid>
+        <Box>
+          <CoinInfo coin={coin}/>
+        </Box>
       </SingleCoinContainer>
     </Container>
   </>);
