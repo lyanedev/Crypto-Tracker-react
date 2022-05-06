@@ -1,7 +1,8 @@
 import "./HomePage.styled";
 
-import Banner from "../../components/Banner/Banner";
-import CoinsTable from "../../components/CoinsTable/CoinsTable";
+import {Banner, CoinsTable} from "../../components";
+
+
 
 const HomePage = () => {
   return (

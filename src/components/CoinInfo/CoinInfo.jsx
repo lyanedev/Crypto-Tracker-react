@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
 
-import {HistoricalChart} from "../config/api";
+import {HistoricalChart} from "../../config/api";
 
-import {CryptoState} from "../CryptoContext";
+import {CryptoState} from "../../CryptoContext";
 import {Box, CircularProgress} from "@mui/material";
 import axios from "axios";
 
-import { Line } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
+import {Line} from 'react-chartjs-2';
+import {Chart, registerables} from 'chart.js';
+
 Chart.register(...registerables);
 
 
@@ -37,6 +38,17 @@ const CoinInfo = ({coin}) => {
     {!historicData ? (<CircularProgress size={100} thickness={1}/>) : (
         <Box sx={{width: "100%"}}>
           <Line
+              options={
+                {
+                  responsive: true,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: `Evolution de ${coin.id.toUpperCase()}`,
+                    },
+                  },
+                }
+              }
               data={{
                 labels: historicData.map(coin => {
                   let date = new Date(coin[0])

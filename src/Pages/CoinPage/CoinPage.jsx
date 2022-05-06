@@ -9,7 +9,9 @@ import {CryptoState} from "../../CryptoContext";
 import "./CoinPage.styled";
 import {Box, Container, Grid} from "@mui/material";
 import {CoinInfos, CryptoName, Rank, SingleCoinContainer} from "./CoinPage.styled";
-import CoinInfo from "../../components/CoinInfo";
+import {CoinInfo} from "../../components";
+
+
 
 const CoinPage = () => {
   const {id} = useParams();
